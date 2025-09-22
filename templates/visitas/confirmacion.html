@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Estado de tu solicitud</h1>
+
+<p><strong>ID:</strong> {{ solicitud.id }}</p>
+<p><strong>Cliente:</strong> {{ solicitud.nombre_cliente }}</p>
+<p><strong>Dirección:</strong> {{ solicitud.direccion }}</p>
+<p><strong>Servicio:</strong> {{ solicitud.get_tipo_servicio_display }}</p>
+<p><strong>Estado:</strong> {{ solicitud.get_estado_display }}</p>
+
+{% if solicitud.jardinero_asignado %}
+  <p><strong>Jardinero asignado:</strong> {{ solicitud.jardinero_asignado }}</p>
+  <p><strong>Hora asignada:</strong> {{ solicitud.hora_asignada|date:"d/m/Y H:i" }}</p>
+{% else %}
+  <p>Aún no se ha asignado un jardinero.</p>
+{% endif %}
+
+{% if solicitud.estado == 'pendiente_evaluacion' %}
+  <h3>Evalúa el servicio</h3>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Enviar evaluación</button>
+  </form>
+{% elif solicitud.estado == 'completada' %}
+  {% if solicitud.foto_cliente %}
+    <p><strong>Foto subida:</strong> <img src="{{ solicitud.foto_cliente.url }}" width="200"></p>
+  {% endif %}
+  {% if solicitud.calificacion %}
+    <p><strong>Calificación:</strong> {{ solicitud.calificacion }} ⭐</p>
+  {% endif %}
+{% endif %}
+
+<a href="{% url 'visitas:cliente' %}">Volver al formulario cliente</a>
+{% endblock %}

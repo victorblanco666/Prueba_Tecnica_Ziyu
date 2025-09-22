@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Solicitudes recibidas (Panel de la empresa)</h1>
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert">{{ message }}</div>
+{% endfor %}
+{% endif %}
+
+{% if solicitudes %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Dirección</th>
+            <th>Servicio</th>
+            <th>Disponibilidad cliente</th>
+            <th>Estado</th>
+            <th>Asignar Jardinero</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in solicitudes %}
+        <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.nombre_cliente }}</td>
+            <td>{{ s.direccion }}</td>
+            <td>{{ s.get_tipo_servicio_display }}</td>
+            <td>{{ s.disponibilidad_horaria }}</td>
+            <td>{{ s.get_estado_display }}</td>
+            <td>
+                {% if s.estado == 'pendiente' %}
+                <form method="post" action="{% url 'visitas:asignar_jardinero' s.id %}">
+                    {% csrf_token %}
+                    <select name="jardinero_id" required>
+                        <option value="">--Selecciona jardinero--</option>
+                        {% for j in jardineros %}
+                        <option value="{{ j.id }}">{{ j.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="datetime-local" name="hora_asignada" required>
+                    <button type="submit">Asignar</button>
+                </form>
+                {% else %}
+                {{ s.jardinero_asignado }}<br>
+                {{ s.hora_asignada|date:"d/m/Y H:i" }}
+                {% endif %}
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No hay solicitudes aún.</p>
+{% endif %}
+
+<hr>
+<a href="{% url 'visitas:cliente' %}">Volver al formulario cliente</a>
+{% endblock %}

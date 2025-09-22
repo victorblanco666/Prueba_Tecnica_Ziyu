@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <h1>Solicitar visita</h1>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar solicitud</button>
+  </form>
+
+  <hr>
+  <a href="{% url 'visitas:empresa' %}">Ir al panel de la empresa</a>
+{% endblock %}

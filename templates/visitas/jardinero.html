@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Solicitudes asignadas a {{ jardinero.nombre }}</h1>
+
+{% if solicitudes %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Dirección</th>
+        <th>Servicio</th>
+        <th>Disponibilidad cliente</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in solicitudes %}
+        <tr>
+          <td>{{ s.id }}</td>
+          <td>{{ s.nombre_cliente }}</td>
+          <td>{{ s.direccion }}</td>
+          <td>{{ s.get_tipo_servicio_display }}</td>
+          <td>{{ s.disponibilidad_horaria }}</td>
+          <td>{{ s.get_estado_display }}</td>
+          <td>
+            {% if s.estado == 'asignada' %}
+              <a href="{% url 'visitas:iniciar_servicio' s.id %}" class="btn btn-primary btn-sm">Iniciar</a>
+            {% elif s.estado == 'en_proceso' %}
+              <a href="{% url 'visitas:finalizar_servicio' s.id %}" class="btn btn-success btn-sm">Finalizar</a>
+            {% else %}
+              -
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No tienes solicitudes asignadas.</p>
+{% endif %}
+{% endblock %}
