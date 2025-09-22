@@ -1,4 +1,3 @@
-# visitas/scripts/eliminar_solicitud.py
 
 """
 Script para eliminar una solicitud por ID desde shell_plus de Django.
@@ -8,7 +7,7 @@ Uso:
     python manage.py shell_plus
 2. Importa y ejecuta la función:
     from visitas.scripts.eliminar_solicitud import eliminar_solicitud
-    eliminar_solicitud(14)  # Reemplaza 14 por el ID que quieras eliminar
+    eliminar_solicitud(x)  # Reemplaza 14 por el ID que quieras eliminar
 """
 
 from visitas.models import Solicitud
