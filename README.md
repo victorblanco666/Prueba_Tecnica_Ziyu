@@ -23,16 +23,23 @@
 # 4- Abrir la aplicacion:
 # Ctrl+Click en el enlace entregado Ej: "http://127.0.0.1:8000" para abrir la aplicación web
 
+# 5- Creacion de super usuario(En caso de ser necesario)
+# python manage.py createsuperuser
+# Crear Nombre de Usuario
+# Ingresar Correo Electronico
+# Crear Password
+# Super User Creado con Exito 
+
 # Rutas del proyecto:
 
+# http://127.0.0.1:8000/admin --> Panel de administrador para crear solicitudes y jardineroes con privilegios 
 # http://127.0.0.1:8000/  --> Vista inicial para Solicitar Servicio
 # http://127.0.0.1:8000/empresa --> Vista para ver pedidos, asignar jardineros y moniterar estado de los pedidos asignados 
 # http://127.0.0.1:8000/jarinero/Id_Del_Jardinero ej: http://127.0.0.1:8000/jarinero/3  --> Vista para que un jardinero vea y administre sus pedidos 
-# http://127.0.0.1:8000/confirmacion/Token de Seion Ej: http://127.0.0.1:8000/confirmacion/a4f4f1ce-4b03-4781-a3bd-70a1ef93c986/                       --> Hacer click en el enlace para ver el el estado del servicio solicitado y confirmar satisfaccion 
+# http://127.0.0.1:8000/confirmacion/Token_De_Seion Ej: http://127.0.0.1:8000/confirmacion/a4f4f1ce-4b03-4781-a3bd-70a1ef93c986/        --> Hacer click en el enlace para ver el el estado del servicio solicitado y confirmar satisfaccion 
 
-# Eliminar solicitudes a traves del Shell 
+# Eliminar solicitudes a traves del Shell (Ejecutar Comandos Liena por Linea)
 
 # python manage.py shell_plus
-
 # from visitas.scripts.eliminar_solicitud import eliminar_solicitud
 # eliminar_solicitud(15) <---- Poner Id de la solicitud que se desea eliminar

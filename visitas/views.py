@@ -3,18 +3,16 @@ from django.contrib import messages
 from django.utils import timezone
 from .forms import EvaluacionForm, SolicitudForm
 from .models import Solicitud, Jardinero
+from django.utils.safestring import mark_safe
 
 def cliente(request):
     if request.method == 'POST':
         form = SolicitudForm(request.POST)
         if form.is_valid():
             solicitud = form.save()
-            messages.success(
-                request,
-                'Solicitud creada correctamente. '
-                f'Guarda este enlace para ver tu confirmación: '
-                f'{request.build_absolute_uri("/confirmacion/"+str(solicitud.token_confirmacion)+"/")}'
-            )
+            link = request.build_absolute_uri("/confirmacion/" + str(solicitud.token_confirmacion) + "/")
+            messages.success(request,mark_safe(f'Solicitud creada correctamente. Guarda este enlace para ver tu confirmación: '
+            f'<a href="{link}" target="_blank">{link}</a>'))
             return redirect('visitas:cliente')
         else:
             messages.error(request, 'Hay errores en el formulario.')
